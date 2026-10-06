@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Happy Birthday Drashti ❤️</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#120914;color:#fff}
+body{touch-action:manipulation}
+.screen{position:fixed;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;overflow:hidden}
+.screen.active{display:flex}
+.bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 35%,#5d245d 0,#261027 45%,#0d0710 100%)}
+.content{position:relative;z-index:3;width:min(92vw,600px)}
+h1,h2,p{margin:0}
+h1{font-size:clamp(38px,11vw,72px);line-height:1.05}
+h2{font-size:clamp(28px,8vw,48px)}
+p{font-size:clamp(17px,4.5vw,23px);line-height:1.55;margin-top:18px}
+.small{font-size:14px;opacity:.75;margin-top:22px}
+button{border:0;border-radius:999px;padding:15px 28px;font-size:18px;font-weight:700;background:#fff;color:#3a123d;margin-top:28px;box-shadow:0 10px 30px #0005}
+#videoScreen{background:#000;padding:0}
+#memoryVideo{width:100%;height:100%;object-fit:contain;background:#000}
+.videoShade{position:absolute;inset:0;background:linear-gradient(transparent 55%,#0009);pointer-events:none}
+.next{position:absolute;z-index:5;bottom:28px;right:22px;padding:11px 20px;font-size:15px;background:#ffffffdd}
+.cakeArea{margin:25px auto 0;width:260px;height:245px;position:relative}
+.plate{position:absolute;bottom:8px;left:15px;width:230px;height:24px;border-radius:50%;background:#eee;box-shadow:0 4px 0 #bbb}
+.cake{position:absolute;bottom:30px;left:35px;width:190px}
+.layer{height:52px;border-radius:12px 12px 8px 8px;margin-top:3px;background:linear-gradient(#ffb6d5,#f27eae);box-shadow:inset 0 -7px #d95d93}
+.layer.top{width:155px;margin:auto}
+.candle{position:absolute;bottom:132px;width:12px;height:48px;background:#fff;left:124px;border-radius:4px}
+.flame{position:absolute;bottom:176px;left:122px;width:16px;height:22px;background:#ffd65a;border-radius:50% 50% 45% 45%;box-shadow:0 0 20px #ffb300;animation:flicker .45s infinite alternate}
+@keyframes flicker{to{transform:scale(.82) translateY(2px);opacity:.8}}
+.cakeBuild .layer{opacity:0;transform:translateY(25px);transition:.7s}
+.cakeBuild.show1 .layer.l1,.cakeBuild.show2 .layer.l1,.cakeBuild.show2 .layer.l2,.cakeBuild.show3 .layer{opacity:1;transform:none}
+.cakeBuild .candle,.cakeBuild .flame{opacity:0;transition:.6s}
+.cakeBuild.show3 .candle,.cakeBuild.show3 .flame{opacity:1}
+.msg{background:#ffffff12;border:1px solid #ffffff22;border-radius:24px;padding:25px 22px;backdrop-filter:blur(8px);box-shadow:0 15px 50px #0005}
+.heart{font-size:55px;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.13)}}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.confetti i{position:absolute;width:8px;height:15px;background:#fff;top:-20px;animation:fall 3.5s linear infinite}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+#tapHint{animation:pulse 1.3s infinite}
+
+.extra-card{background:#ffffff12;border:1px solid #ffffff24;border-radius:26px;padding:24px 20px;margin-top:20px;backdrop-filter:blur(9px);box-shadow:0 15px 45px #0005}
+.points{display:grid;gap:11px;margin-top:18px;text-align:left}
+.points div{padding:13px 15px;border-radius:15px;background:#ffffff0d;border:1px solid #ffffff12;font-size:16px}
+.wishBox{max-height:52vh;overflow:auto;margin-top:15px;padding-right:3px}
+.wish{padding:10px 14px;margin:7px 0;border-radius:14px;background:#ffffff10;font-size:15px}
+.reveal{font-size:25px;line-height:1.5;margin-top:18px}
+</style>
+</head>
+<body>
+
+<section class="screen active" id="start">
+  <div class="bg"></div>
+  <div class="content">
+    <div class="heart">💗</div>
+    <h1>For Drashti</h1>
+    <p>Someone very special has a birthday today...</p>
+    <button id="startBtn">Tap to begin ✨</button>
+    <div class="small">Turn your volume up 🎵</div>
+  </div>
+</section>
+
+<section class="screen" id="intro">
+  <div class="bg"></div>
+  <div class="content">
+    <div style="font-size:70px">🎂</div>
+    <h2>Happy Birthday, Drashti!</h2>
+    <p>25 years of being absolutely wonderful. ❤️</p>
+    <button data-next="cake">Let's celebrate 🎉</button>
+  </div>
+</section>
+
+<section class="screen" id="cake">
+  <div class="bg"></div>
+  <div class="content">
+    <h2>Make a wish... ✨</h2>
+    <p id="cakeText">Your cake is getting ready 🎂</p>
+    <div class="cakeArea cakeBuild" id="cakeBuild">
+      <div class="plate"></div>
+      <div class="cake">
+        <div class="layer l1"></div>
+        <div class="layer l2"></div>
+        <div class="layer top"></div>
+      </div>
+      <div class="candle"></div><div class="flame"></div>
+    </div>
+    <button id="buildBtn">Build the cake 🎂</button>
+  </div>
+</section>
+
+<section class="screen" id="videoScreen">
+  <video id="memoryVideo" playsinline preload="auto">
+    <source src="1000545973.mp4" type="video/mp4">
+  </video>
+  <div class="videoShade"></div>
+  <button class="next" id="videoNext">Continue ❤️</button>
+</section>
+
+<section class="screen" id="messages">
+  <div class="bg"></div>
+  <div class="content">
+    <div class="msg">
+      <div style="font-size:45px">💌</div>
+      <p id="messageText"></p>
+    </div>
+    <button id="msgNext">Next ❤️</button>
+  </div>
+</section>
+
+
+<section class="screen" id="special">
+  <div class="bg"></div>
+  <div class="content">
+    <div style="font-size:58px">🌸</div>
+    <h2>Why You're So Special</h2>
+    <div class="extra-card">
+      <div class="points">
+        <div>💗 You make ordinary moments feel special.</div>
+        <div>🫶 You always know how to make people smile.</div>
+        <div>✨ Your kindness makes every place feel warmer.</div>
+        <div>😂 Life is simply more fun when you're around.</div>
+        <div>🌷 You deserve all the love you give to everyone else.</div>
+      </div>
+    </div>
+    <button data-next="promise">There's more ❤️</button>
+  </div>
+</section>
+
+<section class="screen" id="promise">
+  <div class="bg"></div>
+  <div class="content">
+    <div style="font-size:58px">🫶</div>
+    <h2>Our Little Promise</h2>
+    <div class="extra-card">
+      <p>Through all the crazy days, silly moments, celebrations and everything life brings...</p>
+      <p><b>we'll always have each other's backs. ❤️</b></p>
+      <p>No matter how much time passes, some bonds only get stronger.</p>
+    </div>
+    <button data-next="wishes">One more thing ✨</button>
+  </div>
+</section>
+
+<section class="screen" id="wishes">
+  <div class="bg"></div>
+  <div class="content">
+    <div style="font-size:55px">🎁</div>
+    <h2>25 Wishes For 25 ✨</h2>
+    <div class="extra-card wishBox">
+      <div class="wish">1. Endless happiness 💗</div>
+      <div class="wish">2. Lots of laughter 😂</div>
+      <div class="wish">3. Peace in every season 🌸</div>
+      <div class="wish">4. Beautiful surprises 🎁</div>
+      <div class="wish">5. Big dreams coming true ✨</div>
+      <div class="wish">6. Good health 🌷</div>
+      <div class="wish">7. More unforgettable memories 📸</div>
+      <div class="wish">8. Love that feels like home 🫶</div>
+      <div class="wish">9. Confidence in yourself 💫</div>
+      <div class="wish">10. Adventures worth remembering 🌍</div>
+      <div class="wish">11. Success in everything you choose 🌟</div>
+      <div class="wish">12. Someone always cheering for you 📣</div>
+      <div class="wish">13. More reasons to smile 😊</div>
+      <div class="wish">14. Fewer worries and more peace ☁️</div>
+      <div class="wish">15. Days filled with sunshine ☀️</div>
+      <div class="wish">16. Courage for every new beginning 🌱</div>
+      <div class="wish">17. Little moments that become big memories 💕</div>
+      <div class="wish">18. Dreams bigger than your fears 🦋</div>
+      <div class="wish">19. Happiness that stays 🌈</div>
+      <div class="wish">20. People who value you always 💖</div>
+      <div class="wish">21. A heart that stays full ❤️</div>
+      <div class="wish">22. Plenty of reasons to celebrate 🎉</div>
+      <div class="wish">23. Everything you've been hoping for ✨</div>
+      <div class="wish">24. A year better than the last 🌷</div>
+      <div class="wish">25. And a lifetime of beautiful birthdays 🎂</div>
+    </div>
+    <button data-next="surprise">Final surprise 💌</button>
+  </div>
+</section>
+
+<section class="screen" id="surprise">
+  <div class="bg"></div>
+  <div class="content">
+    <div style="font-size:70px">💖</div>
+    <h2>One Last Surprise...</h2>
+    <div class="extra-card">
+      <div class="reveal">If this little website could give you one gift,<br>
+      it would be this:</div>
+      <p><b>Never forget how loved, appreciated and special you are.</b></p>
+      <p>Happy Birthday, Drashti. 🥹❤️</p>
+    </div>
+    <button data-next="final">Open your birthday wish 🎂</button>
+  </div>
+</section>
+
+<section class="screen" id="final">
+  <div class="bg"></div><div class="confetti" id="confetti"></div>
+  <div class="content">
+    <div style="font-size:75px">🎉🎂💖</div>
+    <h1>Happy 25th Birthday!</h1>
+    <p>Drashti, may your life always be filled with love, laughter and beautiful moments.</p>
+    <p style="font-weight:700">You deserve all the happiness in the world. ❤️</p>
+  </div>
+</section>
+
+<audio id="song" preload="auto" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const screens=[...document.querySelectorAll('.screen')];
+const show=id=>{
+  screens.forEach(s=>s.classList.toggle('active',s.id===id));
+  if(id!=='videoScreen') document.getElementById('memoryVideo').pause();
+};
+const song=document.getElementById('song');
+const video=document.getElementById('memoryVideo');
+
+document.getElementById('startBtn').onclick=()=>{
+  song.play().catch(()=>{});
+  show('intro');
+};
+document.querySelectorAll('[data-next]').forEach(b=>b.onclick=()=>show(b.dataset.next));
+
+let stage=0;
+document.getElementById('buildBtn').onclick=()=>{
+  stage++;
+  const cake=document.getElementById('cakeBuild');
+  cake.className='cakeBuild show'+Math.min(stage,3);
+  const t=document.getElementById('cakeText');
+  const b=document.getElementById('buildBtn');
+  if(stage===1){t.textContent='First layer... 💗';b.textContent='Add the next layer ✨'}
+  else if(stage===2){t.textContent='Almost ready... 🎂';b.textContent='Light the candles 🕯️'}
+  else {t.textContent='Now make your wish! 💫';b.textContent='Watch your memory ❤️';}
+  if(stage>=3)b.onclick=()=>{show('videoScreen');video.currentTime=0;video.play().catch(()=>{});};
+};
+
+document.getElementById('videoNext').onclick=()=>show('messages');
+
+const messages=[
+"You are the best thing that ever happened to me.",
+"Thank you for always sticking by my side and accepting me just the way I am.",
+"No matter where life takes us, I know we will always have each other's backs.",
+"You bring so much joy, love, and laughter into my world every single day.",
+"Life is so much brighter and happier with you by my side."
+];
+let mi=0;
+document.getElementById('messageText').textContent=messages[0];
+document.getElementById('msgNext').onclick=()=>{
+  mi++;
+  if(mi<messages.length){
+    document.getElementById('messageText').textContent=messages[mi];
+  }else{
+    show('special');
+  }
+};
+function makeConfetti(){
+  const c=document.getElementById('confetti');
+  c.innerHTML='';
+  for(let i=0;i<90;i++){
+    const x=document.createElement('i');
+    x.style.left=Math.random()*100+'%';
+    x.style.animationDelay=(Math.random()*3)+'s';
+    x.style.animationDuration=(2.5+Math.random()*2)+'s';
+    x.style.transform='rotate('+Math.random()*360+'deg)';
+    c.appendChild(x);
+  }
+}
+video.addEventListener('ended',()=>{});
+</script>
+</body>
+</html>
